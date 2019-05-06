@@ -18,6 +18,8 @@
         <variable
                 name="mastodonEnabled"
                 type="Boolean"/>
+
+        <variable name="slackEnabled" type="Boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -209,6 +211,7 @@
                         android:layout_height="wrap_content"
                         app:categoryId="@{@id/category_share}"
                         app:desc="@{@string/pref_item_desc_slack_webhook_url}"
+                        app:maskInactiveVisible="@{!slackEnabled}"
                         app:title="@{@string/pref_item_title_slack_webhook_url}" />
 
                 <include

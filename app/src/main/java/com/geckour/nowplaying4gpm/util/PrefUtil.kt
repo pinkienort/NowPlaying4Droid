@@ -24,6 +24,8 @@ enum class PrefKey(val defaultValue: Any? = null) {
     PREF_KEY_DELAY_POST_MASTODON(2000L),
     PREF_KEY_VISIBILITY_MASTODON,
     PREF_KEY_SHOW_SUCCESS_NOTIFICATION_MASTODON(false),
+    PREF_KEY_WHETHER_ENABLE_AUTO_POST_SLACK(false),
+    PREF_KEY_SLACK_WEBHOOK_URL,
     PREF_KEY_WHETHER_RESIDE(true),
     PREF_KEY_WHETHER_SHOW_ARTWORK_IN_NOTIFICATION(true),
     PREF_KEY_CHOSEN_PALETTE_COLOR(PaletteColor.LIGHT_VIBRANT.ordinal),
@@ -106,6 +108,10 @@ fun SharedPreferences.getFormatPatternModifiers(): List<FormatPatternModifier> =
 fun SharedPreferences.getFormatPattern(context: Context): String =
     getString(PrefKey.PREF_KEY_PATTERN_FORMAT_SHARE_TEXT.name, null)
         ?: context.getString(R.string.default_sharing_text_pattern)
+
+fun SharedPreferences.getSlackWebhookUrl(): String =
+    getString(PrefKey.PREF_KEY_SLACK_WEBHOOK_URL.name, null)
+            ?: ""
 
 private fun SharedPreferences.setTempArtworkInfo(artworkUri: Uri?) {
     edit().putString(

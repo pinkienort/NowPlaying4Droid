@@ -286,6 +286,22 @@ class SettingsActivity : WithCrashlyticsActivity() {
             }
         }
 
+        binding.itemSwitchAutoPostSlack.also { b ->
+            b.root.setOnClickListener { onClickItemWithSwitch(b.extra) }
+            b.extra.apply {
+                visibility = View.VISIBLE
+                addView(getSwitch(PrefKey.PREF_KEY_WHETHER_ENABLE_AUTO_POST_SLACK) { checkState, summary ->
+                    b.summary = summary
+                    binding.slackEnabled = checkState
+                })
+            }
+        }
+
+        binding.itemSlackWebhookUrl.summary = sharedPreferences.getSlackWebhookUrl()
+        binding.itemSlackWebhookUrl.root.setOnClickListener {
+            viewModel.onClickSlackWebhookUrl(this, sharedPreferences, binding.itemSlackWebhookUrl)
+        }
+
         binding.itemSwitchReside.also { b ->
             b.root.setOnClickListener { onClickItemWithSwitch(b.extra) }
             b.extra.apply {

@@ -654,6 +654,42 @@ class SettingsViewModel : ViewModel() {
         }
     }
 
+    internal fun onClickSlackWebhookUrl(
+        context: Context,
+        sharedPreferences: SharedPreferences,
+        webhookUrlBinding: ItemPrefItemBinding
+    ) {
+        val dialogBinding = DialogEditTextBinding.inflate(
+            LayoutInflater.from(context),
+            null,
+            false
+        ).apply {
+            hint = "" // TODO: 必要そうだったらstringに入れる
+            editText.setText(sharedPreferences.getSlackWebhookUrl(context))
+            editText.setSelection(editText.text.length)
+        }
+
+        AlertDialog.Builder(context).generate(
+            dialogBinding.root,
+            context.getString(R.string.dialog_title_slack_webhook_url),
+            context.getString(R.string.dialog_message_slack_webhook_url)
+        ) { dialog, which ->
+            when(which) {
+                DialogInterface.BUTTON_POSITIVE -> {
+                    dialogBinding.editText.text.toString().let {
+                        sharedPreferences.edit()
+                            .putString(PrefKey.PREF_KEY_SLACK_WEBHOOK_URL.name, it)
+                            .apply()
+                        webhookUrlBinding.summary = it
+                    }
+                }
+            }
+            onRequestUpdate()
+            dialog.dismiss()
+        }
+    }
+
+
     private fun onRequestUpdate() {
         if (showingNotificationServicePermissionDialog.not()) requestUpdate.call()
     }
