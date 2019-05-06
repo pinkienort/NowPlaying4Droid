@@ -43,6 +43,10 @@
     <string name="pref_item_desc_visibility_mastodon">Mastodonへの自動投稿の公開範囲を選択</string>
     <string name="pref_item_title_success_notification_mastodon">成功時の通知</string>
     <string name="pref_item_desc_success_notification_mastodon">Mastodonへの自動投稿が成功した際に短い通知を表示する</string>
+    <string name="pref_item_title_switch_auto_post_slack">Slackへの自動投稿</string>
+    <string name="pref_item_desc_switch_auto_post_slack">Slackへ自動投稿する</string>
+    <string name="pref_item_title_slack_webhook_url">Slack Webhook URL</string>
+    <string name="pref_item_desc_slack_webhook_url">投稿するチャネルへのWebhook URL</string>
 
     <string name="pref_category_notification">通知</string>
     <string name="pref_item_title_switch_reside_notification">通知の常駐切り替え</string>
