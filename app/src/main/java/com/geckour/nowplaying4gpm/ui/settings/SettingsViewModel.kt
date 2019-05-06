@@ -664,8 +664,8 @@ class SettingsViewModel : ViewModel() {
             null,
             false
         ).apply {
-            hint = "" // TODO: 必要そうだったらstringに入れる
-            editText.setText(sharedPreferences.getSlackWebhookUrl(context))
+            hint = context.getString(R.string.dialog_hint_slack_webhook_url)
+            editText.setText(sharedPreferences.getSlackWebhookUrl())
             editText.setSelection(editText.text.length)
         }
 
@@ -686,9 +686,8 @@ class SettingsViewModel : ViewModel() {
             }
             onRequestUpdate()
             dialog.dismiss()
-        }
+        }.show()
     }
-
 
     private fun onRequestUpdate() {
         if (showingNotificationServicePermissionDialog.not()) requestUpdate.call()
