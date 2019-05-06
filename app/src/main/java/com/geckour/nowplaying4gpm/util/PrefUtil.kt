@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
 import com.geckour.nowplaying4gpm.R
+import com.geckour.nowplaying4gpm.api.SlackWebhookClient
 import com.geckour.nowplaying4gpm.domain.model.ArtworkInfo
 import com.geckour.nowplaying4gpm.domain.model.MastodonUserInfo
 import com.geckour.nowplaying4gpm.domain.model.TrackInfo
@@ -112,6 +113,9 @@ fun SharedPreferences.getFormatPattern(context: Context): String =
 fun SharedPreferences.getSlackWebhookUrl(): String =
     getString(PrefKey.PREF_KEY_SLACK_WEBHOOK_URL.name, null)
             ?: ""
+
+fun SharedPreferences.getSlackWebhookEndpoint(): String =
+    this.getSlackWebhookUrl().replace(SlackWebhookClient.BASE_SLACK_WEBHOOK_URL, "")
 
 private fun SharedPreferences.setTempArtworkInfo(artworkUri: Uri?) {
     edit().putString(

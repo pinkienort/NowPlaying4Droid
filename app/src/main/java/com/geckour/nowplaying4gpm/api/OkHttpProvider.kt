@@ -66,6 +66,20 @@ object OkHttpProvider {
         .applyDebugger()
         .build()
 
+    val slackWebhookClient: OkHttpClient = clientBuilder
+        .addInterceptor {
+            return@addInterceptor it.proceed(
+            it.request()
+                .newBuilder().header(
+                    "Content-type",
+                    "application/json"
+                )
+                .build()
+            )
+        }
+        .applyDebugger()
+        .build()
+
     fun OkHttpClient.Builder.applyDebugger(): OkHttpClient.Builder =
         apply {
             if (BuildConfig.DEBUG) {

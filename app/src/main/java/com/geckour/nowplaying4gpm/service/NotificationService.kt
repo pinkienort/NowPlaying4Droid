@@ -17,10 +17,7 @@ import android.preference.PreferenceManager
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import com.geckour.nowplaying4gpm.BuildConfig
-import com.geckour.nowplaying4gpm.api.LastFmApiClient
-import com.geckour.nowplaying4gpm.api.OkHttpProvider
-import com.geckour.nowplaying4gpm.api.SpotifyApiClient
-import com.geckour.nowplaying4gpm.api.TwitterApiClient
+import com.geckour.nowplaying4gpm.api.*
 import com.geckour.nowplaying4gpm.domain.model.TrackInfo
 import com.geckour.nowplaying4gpm.receiver.ShareWidgetProvider
 import com.geckour.nowplaying4gpm.ui.sharing.SharingActivity
@@ -110,6 +107,9 @@ class NotificationService : NotificationListenerService(), CoroutineScope {
     private val twitterApiClient: TwitterApiClient by lazy {
         TwitterApiClient(BuildConfig.TWITTER_CONSUMER_KEY, BuildConfig.TWITTER_CONSUMER_SECRET)
     }
+    private val slackWebhookClient: SlackWebhookClient by lazy {
+        SlackWebhookClient()
+    }
 
     private lateinit var job: Job
     override val coroutineContext: CoroutineContext
@@ -119,6 +119,7 @@ class NotificationService : NotificationListenerService(), CoroutineScope {
     private var currentTrackClearJob: Job? = null
     private var currentTrackSetJob: Job? = null
     private var postMastodonJob: Job? = null
+    private var postSlackJob: Job? = null
 
     private var currentSbn: StatusBarNotification? = null
     private var currentMetadata: MediaMetadata? = null
@@ -359,6 +360,7 @@ class NotificationService : NotificationListenerService(), CoroutineScope {
     private suspend fun onUpdate(trackInfo: TrackInfo) {
         reflectTrackInfo(trackInfo)
         postMastodon(trackInfo)
+        postSlack(trackInfo)
     }
 
     private suspend fun reflectTrackInfo(info: TrackInfo, withArtwork: Boolean = true) {
@@ -494,6 +496,28 @@ class NotificationService : NotificationListenerService(), CoroutineScope {
 
                 showShortNotify(result)
             }
+        }
+    }
+
+    private fun postSlack(trackInfo: TrackInfo) {
+        if (trackInfo == TrackInfo.empty ||
+            !sharedPreferences.getSwitchState(PrefKey.PREF_KEY_WHETHER_ENABLE_AUTO_POST_SLACK)
+        ) return
+        postSlackJob?.cancel()
+        postSlackJob = launch {
+            val subject = sharedPreferences.getSharingText(this@NotificationService, trackInfo)
+                ?: return@launch
+            FirebaseAnalytics.getInstance(application)
+                .logEvent(
+                    FirebaseAnalytics.Event.SELECT_CONTENT,
+                    Bundle().apply {
+                        putString(FirebaseAnalytics.Param.ITEM_NAME, "Invoked slack auto post")
+                    }
+                )
+            slackWebhookClient.postSimpleText(
+                sharedPreferences.getSlackWebhookEndpoint(),
+                subject
+            )
         }
     }
 
