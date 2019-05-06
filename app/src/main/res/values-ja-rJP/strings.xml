@@ -109,6 +109,8 @@
     <string name="dialog_title_mastodon_delay">遅延時間を入力</string>
     <string name="dialog_title_mastodon_visibility">Mastodonの公開範囲</string>
     <string name="dialog_message_mastodon_visibility">Mastodonへの自動投稿の公開範囲を選択</string>
+    <string name="dialog_title_slack_webhook_url">Slack Webhook URLを入力</string>
+    <string name="dialog_message_slack_webhook_url">投稿したいチャンネルへのWebhook URL</string>
     <string name="dialog_title_choose_color">カラーパレットから選択</string>
     <string name="dialog_message_choose_color">アートワークのキーカラーより抽出されます</string>
     <string name="dialog_title_alert_no_metadata">共有できません</string>

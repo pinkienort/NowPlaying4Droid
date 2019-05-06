@@ -124,6 +124,8 @@
     <string name="dialog_title_mastodon_delay">Input delay duration</string>
     <string name="dialog_title_mastodon_visibility">Visibility of Mastodon</string>
     <string name="dialog_message_mastodon_visibility">Select visibility of auto post for Mastodon</string>
+    <string name="dialog_title_slack_webhook_url">Enter Slack Webhook URL</string>
+    <string name="dialog_message_slack_webhook_url">Slack Webhook URL which you want to post</string>
     <string name="dialog_title_choose_color">Select from color palette</string>
     <string name="dialog_message_choose_color">Colors are extracted from artwork\'s key colors</string>
     <string name="dialog_title_alert_no_metadata">Failure to share</string>
