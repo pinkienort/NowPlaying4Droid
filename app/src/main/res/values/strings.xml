@@ -61,6 +61,8 @@
     <string name="pref_item_desc_switch_auto_post_slack">Enable auto post with slack mode</string>
     <string name="pref_item_title_slack_webhook_url">Slack webhook url</string>
     <string name="pref_item_desc_slack_webhook_url">Endpoint url of slack webhook which you want to post</string>
+    <string name="pref_item_title_delay_slack">Time margin of auto post</string>
+    <string name="pref_item_desc_delay_slack">Set margin time to determine auto post for Slack</string>
 
     <string name="pref_category_notification">Notification</string>
     <string name="pref_item_title_switch_reside_notification">Resident notification</string>

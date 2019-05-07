@@ -16,6 +16,7 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
+import android.util.Log
 import com.geckour.nowplaying4gpm.BuildConfig
 import com.geckour.nowplaying4gpm.api.*
 import com.geckour.nowplaying4gpm.domain.model.TrackInfo
@@ -505,6 +506,8 @@ class NotificationService : NotificationListenerService(), CoroutineScope {
         ) return
         postSlackJob?.cancel()
         postSlackJob = launch {
+            delay(sharedPreferences.getDelayDurationPostSlack())
+
             val subject = sharedPreferences.getSharingText(this@NotificationService, trackInfo)
                 ?: return@launch
             FirebaseAnalytics.getInstance(application)

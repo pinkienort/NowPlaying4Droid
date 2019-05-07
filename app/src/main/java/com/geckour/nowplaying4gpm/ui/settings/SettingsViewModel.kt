@@ -296,10 +296,11 @@ class SettingsViewModel : ViewModel() {
         }.show()
     }
 
-    internal fun onClickDelayMastodon(
+    internal fun onClickDelayPost(
         context: Context,
-        sharedPreferences: SharedPreferences,
-        itemDelayMastodonBinding: ItemPrefItemBinding
+        itemDelayMastodonBinding: ItemPrefItemBinding,
+        getFunc: () -> Long,
+        storeFunc: (Long) -> Unit
     ) {
         val delayTimeInputDialogBinding = DialogEditTextBinding.inflate(
             LayoutInflater.from(context),
@@ -308,7 +309,7 @@ class SettingsViewModel : ViewModel() {
         ).apply {
             hint = context.getString(R.string.dialog_hint_mastodon_delay)
             editText.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
-            editText.setText(sharedPreferences.getDelayDurationPostMastodon().toString())
+            editText.setText(getFunc().toString())
             editText.setSelection(editText.text.length)
         }
 
@@ -325,7 +326,7 @@ class SettingsViewModel : ViewModel() {
                         null
                     }
                     if (duration != null && duration in (500..60000)) {
-                        sharedPreferences.storeDelayDurationPostMastodon(duration)
+                        storeFunc(duration)
                         itemDelayMastodonBinding.summary =
                             context.getString(R.string.pref_item_summary_delay_mastodon, duration)
                     } else {

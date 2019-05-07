@@ -249,7 +249,11 @@ class SettingsActivity : WithCrashlyticsActivity() {
                 sharedPreferences.getDelayDurationPostMastodon()
             )
             b.root.setOnClickListener {
-                viewModel.onClickDelayMastodon(this, sharedPreferences, binding.itemDelayMastodon)
+                viewModel.onClickDelayPost(
+                    this, binding.itemDelayMastodon,
+                    sharedPreferences::getDelayDurationPostMastodon,
+                    sharedPreferences::storeDelayDurationPostMastodon
+                )
             }
         }
 
@@ -300,6 +304,19 @@ class SettingsActivity : WithCrashlyticsActivity() {
         binding.itemSlackWebhookUrl.summary = sharedPreferences.getSlackWebhookUrl()
         binding.itemSlackWebhookUrl.root.setOnClickListener {
             viewModel.onClickSlackWebhookUrl(this, sharedPreferences, binding.itemSlackWebhookUrl)
+        }
+        binding.itemDelaySlack.apply {
+            summary = getString(
+                R.string.pref_item_summary_delay_mastodon,
+                sharedPreferences.getDelayDurationPostSlack()
+            )
+            root.setOnClickListener {
+                viewModel.onClickDelayPost(
+                    this@SettingsActivity, this,
+                    sharedPreferences::getDelayDurationPostSlack,
+                    sharedPreferences::storeDelayDurationPostSlack
+                )
+            }
         }
 
         binding.itemSwitchReside.also { b ->
