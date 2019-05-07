@@ -19,7 +19,9 @@
                 name="mastodonEnabled"
                 type="Boolean"/>
 
-        <variable name="slackEnabled" type="Boolean" />
+        <variable
+                name="slackEnabled"
+                type="Boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -314,6 +316,7 @@
                         app:categoryId="@{@id/category_others}"
                         app:desc="@{@string/pref_item_desc_donate}"
                         app:title="@{@string/pref_item_title_donate}"/>
+
             </LinearLayout>
         </ScrollView>
 

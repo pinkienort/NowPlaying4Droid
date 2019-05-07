@@ -1,7 +1,8 @@
 package com.geckour.nowplaying4gpm.api
 
 import com.crashlytics.android.Crashlytics
-import com.geckour.nowplaying4gpm.api.model.SlackWebhookResult
+import com.geckour.nowplaying4gpm.api.model.slack.webhook.RequestParamsSimpleText
+import com.geckour.nowplaying4gpm.api.model.slack.webhook.Response
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -21,15 +22,12 @@ class SlackWebhookClient {
             .build()
             .create(SlackWebhookApiService::class.java)
 
-    suspend fun postSimpleText(url: String, text: String): SlackWebhookResult =
+    suspend fun postSimpleText(url: String, text: String): Response =
         try {
-            service.postSimpleText(url, text).await()
+            service.postSimpleText(url, RequestParamsSimpleText(text)).await()
         } catch (t: Throwable) {
             Timber.e(t)
             Crashlytics.logException(t)
-            SlackWebhookResult.getEmpty()
+            Response.getEmpty()
         }
 }
-
-
-

@@ -1,6 +1,7 @@
 package com.geckour.nowplaying4gpm.api
 
-import com.geckour.nowplaying4gpm.api.model.SlackWebhookResult
+import com.geckour.nowplaying4gpm.api.model.slack.webhook.RequestParamsSimpleText
+import com.geckour.nowplaying4gpm.api.model.slack.webhook.Response
 import kotlinx.coroutines.Deferred
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -13,6 +14,6 @@ interface SlackWebhookApiService {
         @Url
         url: String,
         @Body
-        text: String
-    ): Deferred<SlackWebhookResult>
+        data: RequestParamsSimpleText
+    ): Deferred<Response>
 }
